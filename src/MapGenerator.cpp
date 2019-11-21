@@ -52,7 +52,7 @@ void MapGenerator::DrawMap(sf::RenderWindow &window, AssetLoader& assetLoader)
     assetLoader.ground.move(-assetLoader.ground.getGlobalBounds().width,0);
 }
 
-bool MapGenerator::DetectCollision()
+bool MapGenerator::DetectCollision(AssetLoader& assetLoader)
 {
-
+    //if(assetLoader.bird[0].getPosition().y > assetLoader.ground )
 }

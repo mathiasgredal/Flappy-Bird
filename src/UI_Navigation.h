@@ -7,6 +7,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "AssetLoader.h"
+#include "MapGenerator.h"
 
 enum UI_State { MainMenu, PreGame, InGame, GameOver};
 enum FontType { SmallNum, MediumNum, LargeNum};
@@ -17,10 +18,10 @@ class UI_Navigation
 public:
     UI_Navigation(const float _scale, AssetLoader& assetLoader);
 
-    void DrawUI(sf::RenderWindow &window, float deltaTime, AssetLoader& assetLoader);
+    void DrawUI(sf::RenderWindow &window, float deltaTime, AssetLoader& assetLoader, MapGenerator& mapGenerator);
     void HandleEvent(sf::RenderWindow &window, sf::Event event, AssetLoader& assetLoader);
 
-    void DrawNumber(sf::RenderWindow &window, AssetLoader& assetLoader,FontType fontType, sf::Vector2f position, uint number);
+    void DrawNumber(sf::RenderWindow &window, AssetLoader& assetLoader,FontType fontType, sf::Vector2f position, long number);
 
 
     float screenWidth;
@@ -32,7 +33,7 @@ public:
 
     UI_State uiState = UI_State::MainMenu;
     const float scale;
-    int gameScore = 1264;
+    unsigned long gameScore = 0;
 };
 
 #endif // UI_NAVIGATION_H

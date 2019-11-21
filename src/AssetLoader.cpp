@@ -45,6 +45,10 @@ AssetLoader::AssetLoader(const float scale)
     bird[8].setTextureRect({174, 982, 34, 24});
 
 
+    titleText.setTexture(atlas);
+    titleText.setTextureRect({702, 182 ,178, 48});
+    titleText.setScale(scale, scale);
+
     playButton.setTexture(atlas);
     playButton.setTextureRect({708, 236, 104, 58});
     playButton.setScale(scale, scale);
@@ -53,9 +57,14 @@ AssetLoader::AssetLoader(const float scale)
     scoreButton.setTextureRect({828, 236, 104, 58});
     scoreButton.setScale(scale, scale);
 
-    titleText.setTexture(atlas);
-    titleText.setTextureRect({702, 182 ,178, 48});
-    titleText.setScale(scale, scale);
+    beginScreen.setTexture(atlas);
+    beginScreen.setTextureRect({584, 182, 114, 98});
+    beginScreen.setScale(scale, scale);
+
+    beginText.setTexture(atlas);
+    beginText.setTextureRect({590, 118, 184, 50});
+    beginText.setScale(scale, scale);
+
 
     // Get numbers
     for(int i = 0; i < smallNumbers.size(); i++)
@@ -65,7 +74,7 @@ AssetLoader::AssetLoader(const float scale)
     }
 
     smallNumbers[0].setTextureRect({276, 646, 12, 14});
-    smallNumbers[1].setTextureRect({276, 664, 12, 14});
+    smallNumbers[1].setTextureRect({282, 664, 6, 14});
     smallNumbers[2].setTextureRect({276, 698, 12, 14});
     smallNumbers[3].setTextureRect({276, 716, 12, 14});
     smallNumbers[4].setTextureRect({276, 750, 12, 14});
@@ -75,12 +84,38 @@ AssetLoader::AssetLoader(const float scale)
     smallNumbers[8].setTextureRect({276, 854, 12, 14});
     smallNumbers[9].setTextureRect({276, 872, 12, 14});
 
+    for(int i = 0; i < mediumNumbers.size(); i++)
+    {
+        mediumNumbers[i].setTexture(atlas);
+        mediumNumbers[i].setScale(scale, scale);
+    }
 
+    mediumNumbers[0].setTextureRect({274 , 612 , 14, 20});
+    mediumNumbers[1].setTextureRect({278 , 954 , 10, 20});
+    mediumNumbers[2].setTextureRect({274 , 978 , 14, 20});
+    mediumNumbers[3].setTextureRect({262 , 1002, 14, 20});
+    mediumNumbers[4].setTextureRect({1004, 0   , 14, 20});
+    mediumNumbers[5].setTextureRect({1004, 24  , 14, 20});
+    mediumNumbers[6].setTextureRect({1010, 52  , 14, 20});
+    mediumNumbers[7].setTextureRect({1010, 84  , 14, 20});
+    mediumNumbers[8].setTextureRect({586 , 484 , 14, 20});
+    mediumNumbers[9].setTextureRect({622 , 412 , 14, 20});
 
     for(int i = 0; i < largeNumbers.size(); i++)
     {
         largeNumbers[i].setTexture(atlas);
         largeNumbers[i].setScale(scale, scale);
     }
+
+    largeNumbers[0].setTextureRect({992 , 120 , 24, 36});
+    largeNumbers[1].setTextureRect({272 , 910 , 16, 36});
+    largeNumbers[2].setTextureRect({584 , 320 , 24, 36});
+    largeNumbers[3].setTextureRect({612 , 320, 24, 36});
+    largeNumbers[4].setTextureRect({640,  320, 24, 36});
+    largeNumbers[5].setTextureRect({668,  320, 24, 36});
+    largeNumbers[6].setTextureRect({584,  368, 24, 36});
+    largeNumbers[7].setTextureRect({584+28, 368  , 24, 36});
+    largeNumbers[8].setTextureRect({584+2*28 , 368 , 24, 36});
+    largeNumbers[9].setTextureRect({584+3*28 , 368 , 24, 36});
 
 }

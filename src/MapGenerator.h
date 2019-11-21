@@ -15,7 +15,7 @@ public:
     void DrawMap(sf::RenderWindow &window, AssetLoader& assetLoader);
     void UpdateMap(float deltaTime, AssetLoader& assetLoader);
 
-    bool DetectCollision();
+    bool DetectCollision(AssetLoader& assetLoader);
 
     // Map generation parameters
     const float scale;
@@ -27,7 +27,7 @@ public:
 
     // Game Session info
     std::vector<int> pipes;
-    float distance = -2000;
+    float distance = -1000;
     MapGenerator();
 };
 

@@ -70,9 +70,14 @@ int main()
             player.AnimatePlayer(deltaTime, assetLoader);
             player.DrawPlayer(window, assetLoader, ui.uiState);
 
-            ui.DrawUI(window, deltaTime, assetLoader);
+            ui.DrawUI(window, deltaTime, assetLoader, mapGenerator);
             break;
         case PreGame:
+            mapGenerator.DrawMap(window, assetLoader);
+            player.AnimatePlayer(deltaTime, assetLoader);
+            player.DrawPlayer(window, assetLoader, ui.uiState);
+            ui.DrawUI(window, deltaTime, assetLoader, mapGenerator);
+
             break;
         case InGame:
             mapGenerator.UpdateMap(deltaTime, assetLoader);
@@ -80,7 +85,7 @@ int main()
             player.AnimatePlayer(deltaTime, assetLoader);
             player.UpdatePlayer(deltaTime, assetLoader);
             player.DrawPlayer(window, assetLoader, ui.uiState);
-            ui.DrawUI(window, deltaTime, assetLoader);
+            ui.DrawUI(window, deltaTime, assetLoader, mapGenerator);
             break;
         case GameOver:
             break;
