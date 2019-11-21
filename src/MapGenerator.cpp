@@ -54,5 +54,6 @@ void MapGenerator::DrawMap(sf::RenderWindow &window, AssetLoader& assetLoader)
 
 bool MapGenerator::DetectCollision(AssetLoader& assetLoader)
 {
+    return false;
     //if(assetLoader.bird[0].getPosition().y > assetLoader.ground )
 }

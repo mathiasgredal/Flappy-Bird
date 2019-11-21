@@ -6,7 +6,7 @@ AssetLoader::AssetLoader(const float scale)
 
     if (!atlas.loadFromFile("Assets/atlas.png"))
     {
-        assert(("Unable to find texture atlas in Assets folder", false));
+        //assert(("Unable to find texture atlas in Assets folder", false));
     }
 
     backgroundDay.setTexture(atlas);
