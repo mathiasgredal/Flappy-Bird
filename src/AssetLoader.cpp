@@ -49,6 +49,7 @@ AssetLoader::AssetLoader(const float scale)
     titleText.setTextureRect({702, 182 ,178, 48});
     titleText.setScale(scale, scale);
 
+
     playButton.setTexture(atlas);
     playButton.setTextureRect({708, 236, 104, 58});
     playButton.setScale(scale, scale);
@@ -64,6 +65,16 @@ AssetLoader::AssetLoader(const float scale)
     beginText.setTexture(atlas);
     beginText.setTextureRect({590, 118, 184, 50});
     beginText.setScale(scale, scale);
+
+
+    gameoverText.setTexture(atlas);
+    gameoverText.setTextureRect({794, 118 ,184, 42});
+    gameoverText.setScale(scale, scale);
+
+    scoreBoard.setTexture(atlas);
+    scoreBoard.setTextureRect({6, 518, 226, 114});
+    scoreBoard.setScale(scale, scale);
+    scoreBoard.setPosition(backgroundDay.getGlobalBounds().width/2-scoreBoard.getGlobalBounds().width/2, backgroundDay.getGlobalBounds().height/2-scoreBoard.getGlobalBounds().height/2);
 
 
     // Get numbers

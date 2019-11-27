@@ -7,14 +7,19 @@
 class Player
 {
 public:
-    Player(const float _scale, AssetLoader& assetLoader);
+    Player(const float _scale, const float _speed, AssetLoader& assetLoader);
 
-    void DrawPlayer(sf::RenderWindow &window, AssetLoader& assetLoader, UI_State uiState);
+    void HandleNewState(sf::RenderWindow &window, AssetLoader& assetLoader, UI_State newState);
+
+    void DrawPlayer(sf::RenderWindow &window, AssetLoader& assetLoader, float deltaTime, UI_State uiState);
     void AnimatePlayer(float deltaTime, AssetLoader& assetLoader);
     void UpdatePlayer(float deltaTime, AssetLoader& assetLoader);
     void Jump();
 
     const float scale;
+    const float speed;
+
+    float distance = 0;
 
     // Animation
     const float animationSpeed = 0.2f;

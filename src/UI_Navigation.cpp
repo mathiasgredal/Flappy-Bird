@@ -1,8 +1,11 @@
 #include "UI_Navigation.h"
+#include "MapGenerator.h"
 
 
 UI_Navigation::UI_Navigation(const float _scale, AssetLoader &assetLoader) : scale(_scale)
 {
+    // Move some of this code to assetloader
+
     screenWidth = assetLoader.backgroundDay.getGlobalBounds().width;
     screenHeight = assetLoader.backgroundDay.getGlobalBounds().height;
     playButtonLoc = sf::Vector2f(screenWidth/4.0f-assetLoader.playButton.getGlobalBounds().width/2.0f, screenHeight-assetLoader.ground.getGlobalBounds().height-assetLoader.playButton.getGlobalBounds().height);
@@ -17,7 +20,7 @@ UI_Navigation::UI_Navigation(const float _scale, AssetLoader &assetLoader) : sca
     assetLoader.beginScreen.setPosition(screenWidth/2-assetLoader.beginScreen.getGlobalBounds().width/2, screenHeight/2-assetLoader.beginScreen.getGlobalBounds().height/2);
 
     assetLoader.beginText.setPosition(screenWidth/2-assetLoader.beginText.getGlobalBounds().width/2, screenHeight/3-assetLoader.beginText.getGlobalBounds().height);
-
+    assetLoader.gameoverText.setPosition(screenWidth/2-assetLoader.gameoverText.getGlobalBounds().width/2, screenHeight/3-assetLoader.gameoverText.getGlobalBounds().height);
 
 }
 
@@ -28,7 +31,7 @@ void UI_Navigation::DrawUI(sf::RenderWindow &window, float deltaTime, AssetLoade
     gameScore = (rawGamescore < 0)? 0 : rawGamescore;
 
     // Draw FPS, calculating it without epsilon apparently hides the titletext
-    DrawNumber(window, assetLoader, FontType::SmallNum, {80, 20}, 1.f/(deltaTime+0.000000001));
+    DrawNumber(window, assetLoader, FontType::SmallNum, Alignment::Center, {80, 20}, static_cast<long>(1/(deltaTime+0.000000001f)));
 
     switch (uiState)
     {
@@ -41,12 +44,19 @@ void UI_Navigation::DrawUI(sf::RenderWindow &window, float deltaTime, AssetLoade
     case PreGame:
         window.draw(assetLoader.beginScreen);
         window.draw(assetLoader.beginText);
-        DrawNumber(window, assetLoader, FontType::LargeNum, {screenWidth/2, screenWidth/4}, gameScore);
+        DrawNumber(window, assetLoader, FontType::LargeNum, Alignment::Center, {screenWidth/2, screenWidth/4}, gameScore);
         break;
     case InGame:
-        DrawNumber(window, assetLoader, FontType::LargeNum, {screenWidth/2, screenWidth/4}, gameScore);
+        DrawNumber(window, assetLoader, FontType::LargeNum, Alignment::Center, {screenWidth/2, screenWidth/4}, gameScore);
         break;
     case GameOver:
+        window.draw(assetLoader.scoreBoard);
+        window.draw(assetLoader.playButton);
+        window.draw(assetLoader.scoreButton);
+        window.draw(assetLoader.gameoverText);
+        DrawNumber(window, assetLoader, FontType::MediumNum, Alignment::Right, {screenWidth*0.815f, screenHeight*0.455f}, gameScore);
+        DrawNumber(window, assetLoader, FontType::MediumNum, Alignment::Right, {screenWidth*0.815f, screenHeight*0.537f}, highScore);
+
         break;
 
     }
@@ -55,33 +65,72 @@ void UI_Navigation::DrawUI(sf::RenderWindow &window, float deltaTime, AssetLoade
 
 void UI_Navigation::HandleEvent(sf::RenderWindow &window, sf::Event event, AssetLoader& assetLoader)
 {
-    sf::Vector2f mousePos = (sf::Vector2f)sf::Mouse::getPosition(window);
+    sf::Vector2f mousePos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
 
     switch (uiState)
     {
     case MainMenu:
         if(assetLoader.playButton.getGlobalBounds().contains(mousePos) && event.type == sf::Event::MouseButtonReleased)
         {
-            uiState = UI_State::PreGame;
+            ChangeState(UI_State::PreGame);
         }
         break;
     case PreGame:
         if(event.type == event.KeyPressed)
         {
-            uiState = UI_State::InGame;
+            ChangeState(UI_State::InGame);
         }
         break;
     case InGame:
 
         break;
     case GameOver:
+        if(assetLoader.playButton.getGlobalBounds().contains(mousePos) && event.type == sf::Event::MouseButtonReleased)
+        {
+            ChangeState(UI_State::PreGame);
+        }
         break;
 
     }
 }
 
+void UI_Navigation::HandleNewState(sf::RenderWindow &window, AssetLoader &assetLoader, UI_State newState)
+{
+    if(newState == UI_State::GameOver)
+    {
+        if(gameScore > highScore)
+        {
+            highScore = gameScore;
+            newHighscore = true;
+        }
+    }
+    if(newState == UI_State::PreGame)
+    {
+        newHighscore = false;
+    }
+}
 
-void UI_Navigation::DrawNumber(sf::RenderWindow &window, AssetLoader& assetLoader, FontType fontType, sf::Vector2f position, long number)
+void UI_Navigation::ChangeState(UI_State newState)
+{
+    uiState = newState;
+    stateChanged = true;
+}
+
+bool UI_Navigation::StateChanged()
+{
+    if(stateChanged)
+    {
+        stateChanged = false;
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+
+void UI_Navigation::DrawNumber(sf::RenderWindow &window, AssetLoader& assetLoader, FontType fontType, Alignment alignment, sf::Vector2f position, long number)
 {
     std::string digits = std::to_string(number);
     float distanceBetweenNumbers = 4;
@@ -123,7 +172,15 @@ void UI_Navigation::DrawNumber(sf::RenderWindow &window, AssetLoader& assetLoade
         (*numberSprites)[letterIndex].setPosition(position);
 
         (*numberSprites)[letterIndex].move(currentStringLength, 0);
-        (*numberSprites)[letterIndex].move(-stringWidth/2.0f, 0);
+
+        if(alignment == Alignment::Center)
+        {
+            (*numberSprites)[letterIndex].move(-stringWidth/2.0f, 0);
+        }
+        else if(alignment == Alignment::Right)
+        {
+            (*numberSprites)[letterIndex].move(-stringWidth, 0);
+        }
 
         currentStringLength += distanceBetweenNumbers+letterWidth;
 
