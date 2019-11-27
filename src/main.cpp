@@ -9,7 +9,7 @@
 
 using namespace std;
 
-const float scale = 3.0f;
+const float scale = 3.f;
 
 const int screenWidth = 288*scale;
 const int screenHeight = 512*scale;

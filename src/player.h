@@ -27,10 +27,10 @@ public:
     int animationFrame = 0;
 
     // Physics
-    const float gravity = 2000.0f;
-    const float terminalVelocity = -1300;
-    const float jumpheight = 35.0f;
-    const float jumpvelocity = 800.0f;
+    const float gravity = 4000.0f/3*scale;
+    const float terminalVelocity = -330.0f*scale;
+    const float jumpheight = 11.66f*scale;
+    const float jumpvelocity = 350.0f*scale;
     float birdHeight = 0;
     float velocity = 0;
 

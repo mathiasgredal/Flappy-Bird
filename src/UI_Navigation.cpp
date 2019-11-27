@@ -31,7 +31,7 @@ void UI_Navigation::DrawUI(sf::RenderWindow &window, float deltaTime, AssetLoade
     gameScore = (rawGamescore < 0)? 0 : rawGamescore;
 
     // Draw FPS, calculating it without epsilon apparently hides the titletext
-    DrawNumber(window, assetLoader, FontType::SmallNum, Alignment::Center, {80, 20}, static_cast<long>(1/(deltaTime+0.000000001f)));
+    DrawNumber(window, assetLoader, FontType::SmallNum, Alignment::Center, {26*scale, 14*scale}, static_cast<long>(1/(deltaTime+0.000000001f)));
 
     switch (uiState)
     {
